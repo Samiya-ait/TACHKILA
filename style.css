@@ -84,6 +84,20 @@
 .terrain:nth-child(93){
     grid-area: 8 / 8/8/span 2;
     text-align: center;
-     background-color:#0b2828 ;
+    background-color:#0b2828 ;
     border: 3px dotted #3fe487;
 }
+
+/* modal */
+.modal-posts{
+    display: grid;
+    grid-template-columns: repeat(2,1fr) ;
+    grid-template-rows: repeat(2,1fr);
+    gap: 10%; 
+}
+.open-modal{
+    top: 40%;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+

@@ -1,148 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <title>TACHKILA</title>
-</head>
-<body w-screen h-screen >
+  </head>
+  <body w-screen h-screen>
     <header>
-        <nav class="flex justify-between bg-slate-800 pr-2 pl-2 pb-3 pt-3 border-b">
-            <div class="flex gap-1">
-                <img class="bg-white rounded-full" width="20" height="20" src="https://img.icons8.com/sf-ultralight/25/football2.png" alt="football2"/>
-                <p class="text-white font-bold">TACHKILA</p>
-            </div>
-            <div class="">
-                <ul class="flex gap-5">
-                    <li class="text-orange-500">GB</li>
-                    <li class="text-blue-600">DEF</li>
-                    <li class="text-green-600">MIL</li>
-                    <li class="text-red-600">ATT</li>
-                </ul>
-            </div>
-            <div class="flex gap-3 text-white">
-                <p>Shéma</p>
-                <span class="bg-slate-900 rounded-lg pr-2 pl-2 border border-#334155">4-4-2</span>
-            </div>
-        </nav>
+      <nav
+        class="flex justify-between bg-slate-800 pr-2 pl-2 pb-3 pt-3 border-b"
+      >
+        <div class="flex gap-1">
+          <img
+            class="bg-white rounded-full"
+            width="20"
+            height="20"
+            src="https://img.icons8.com/sf-ultralight/25/football2.png"
+            alt="football2"
+          />
+          <p class="text-white font-bold">TACHKILA</p>
+        </div>
+        <div class="">
+          <ul class="flex gap-5">
+            <li class="text-orange-500">GB</li>
+            <li class="text-blue-600">DEF</li>
+            <li class="text-green-600">MIL</li>
+            <li class="text-red-600">ATT</li>
+          </ul>
+        </div>
+        <div class="flex gap-3 text-white">
+          <p>Shéma</p>
+          <span class="bg-slate-900 rounded-lg pr-2 pl-2 border border-#334155"
+            >4-4-2</span
+          >
+        </div>
+      </nav>
     </header>
     <main class="flex">
-    <aside class=" text-white w-1/4 h-screen bg-slate-800 border-r">
-        <button class="bg-green-600 rounded-lg m-4 p-1 w-4/5 font-bold">+ Ajouter un joueur </button>
-        <button>
-            
+      <aside class="text-white w-1/4 h-screen bg-slate-800 border-r">
+        <button class="  bg-green-600 rounded-lg m-4 p-1 w-4/5 font-bold" id="ajouterBtn">
+          + Ajouter un joueur
         </button>
-    </aside>
-    <article class=" h-screen w-3/4 bg-slate-900  ">
-        <section class="terrain-container">
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 16 -->
-            <div class="terrain">DG</div> 
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 20 -->
-            <div class="terrain">MG</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 35 -->
-            <div class="terrain">BU</div>
-            <!-- 39 -->
-            <div class="terrain"></div>
-            <div class="terrain">GB</div>
-            <div class="terrain"></div>
-            <!-- 43 -->
-            <div class="terrain">DC</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain">MC</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 67 -->
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 63 -->
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 67 -->
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain">DC</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain">MC</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 84 -->
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 89 -->
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <!-- 93 -->
-            <div class="terrain">BU</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain">DD</div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain"></div>
-            <div class="terrain">MD</div>
-        </section>
-    </article>
+      </aside>
+      <section class=" h-screen w-3/4 bg-slate-900 flex flex-col items-center relative  ">
+        <div class="terrain-container">
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 16 -->
+          <div class="terrain">DG</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 20 -->
+          <div class="terrain">MG</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 35 -->
+          <div class="terrain">BU</div>
+          <!-- 39 -->
+          <div class="terrain"></div>
+          <div class="terrain">GB</div>
+          <div class="terrain"></div>
+          <!-- 43 -->
+          <div class="terrain">DC</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain">MC</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 67 -->
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 63 -->
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 67 -->
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain">DC</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain">MC</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 84 -->
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 89 -->
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <!-- 93 -->
+          <div class="terrain">BU</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain">DD</div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain"></div>
+          <div class="terrain">MD</div>
+        </div>
+        <div id="modal" class=" invisible bg-slate-700 mr-5 ml-5 p-2 rounded-xl  transition duration-500 absolute  ">
+          <form action="">
+            <div class="flex justify-between">
+              <h5 class="m-2 font-bold">Ajouter Un joueur</h5>
+              <button class="btn-annuler">
+                &times;
+              </button>
+            </div>
+            <div>
+              <label for="" class="m-2 text-xs"> Nom Complet</label>
+              <input
+                type="text"
+                placeholder="name"
+                class="outline-blue-600 bg-slate-800 rounded-md m-2 mb-4 width-full"
+              />
+            </div>
+            <div class="m-2 mb-4">
+              <label for="" class="text-xs mb-10">Poste</label>
+              <div class="modal-posts">
+                <button type="button" class="bg-slate-800 rounded-md">Gardien</button>
+                <button class="bg-slate-800 rounded-md">Défenseur</button>
+                <button class="bg-slate-800 rounded-md">Milieu</button>
+                <button class="bg-slate-800 rounded-md">Attaquant</button>
+              </div>
+            </div>
+            <div class="m-2 m-4">
+              <label for="" class="text-xs">Numéro(1 à 99)</label>
+              <input
+                type="text"
+                placeholder="Number"
+                class="outline-blue-600 bg-slate-800 rounded-md width-full"
+              />
+            </div>
+            <div id="modal-btn" class=" flex justify-end gap-5">
+              <button class="btn-annuler bg-slate-800 rounded-lg p-1 ">Annuler</button>
+              <button class="btn-ajouter bg-green-600 rounded-lg p-1">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
-</body>
+
+    <script src="index.js"></script>
+  </body>
 </html>
