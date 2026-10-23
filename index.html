@@ -40,11 +40,23 @@
     </header>
     <main class="flex">
       <aside class="text-white w-1/4 h-screen bg-slate-800 border-r">
-        <button class="  bg-green-600 rounded-lg m-4 p-1 w-4/5 font-bold" id="ajouterBtn">
+        <button
+          class="bg-green-600 rounded-lg m-4 p-1 w-4/5 font-bold cursor-pointer"
+          id="ajouterBtn"
+        >
           + Ajouter un joueur
         </button>
+        <div class="flex gap-25">
+          <p>Effectif</p>
+          <p>1joueur(s)</p>
+        </div>
+        <p>
+          Cliquer sur un joueur placé pour voir sa case sur le terrain.tu peux
+          le modifier et supprimer.
+        </p>
+        <!-- <div class="listAddPlayer"></div> -->
       </aside>
-      <section class=" h-screen w-3/4 bg-slate-900 flex flex-col items-center relative  ">
+      <section class="h-screen w-3/4 bg-slate-900 flex flex-col items-center">
         <div class="terrain-container">
           <div class="terrain"></div>
           <div class="terrain"></div>
@@ -151,13 +163,14 @@
           <div class="terrain"></div>
           <div class="terrain">MD</div>
         </div>
-        <div id="modal" class=" invisible bg-slate-700 mr-5 ml-5 p-2 rounded-xl  transition duration-500 absolute  ">
+        <div
+          id="modal"
+          class="invisible bg-slate-700 mr-5 ml-5 p-2 rounded-xl transition duration-500 F"
+        >
           <form action="">
             <div class="flex justify-between">
               <h5 class="m-2 font-bold">Ajouter Un joueur</h5>
-              <button class="btn-annuler">
-                &times;
-              </button>
+              <button class="btn-annuler">&times;</button>
             </div>
             <div>
               <label for="" class="m-2 text-xs"> Nom Complet</label>
@@ -170,10 +183,26 @@
             <div class="m-2 mb-4">
               <label for="" class="text-xs mb-10">Poste</label>
               <div class="modal-posts">
-                <button type="button" class="bg-slate-800 rounded-md">Gardien</button>
-                <button class="bg-slate-800 rounded-md">Défenseur</button>
-                <button class="bg-slate-800 rounded-md">Milieu</button>
-                <button class="bg-slate-800 rounded-md">Attaquant</button>
+                <!-- <button class="post-btn bg-slate-800 rounded-md  cursor-pointer hover:bg-cyan-600">Gardien</button>
+                <button class="post-btn bg-slate-800 rounded-md  cursor-pointer">Défenseur</button>
+                <button class="post-btn bg-slate-800 rounded-md  cursor-pointer">Milieu</button>
+                <button class="post-btn bg-slate-800 rounded-md  cursor-pointer">Attaquant</button> -->
+                <p>
+                  <input type="radio" id="gardien" name="poste" />
+                  <label for="gardien">Gardien</label>
+                </p>
+                <p>
+                  <input type="radio" id="defenseur" name="poste" />
+                  <label for="">Défenseur</label>
+                </p>
+                <p>
+                  <input type="radio" id="milieu" name="poste" />
+                  <label for="">Milieu</label>
+                </p>
+                <p>
+                  <input type="radio" id="Attaquant" name="poste" />
+                  <label for="">Attaquant</label>
+                </p>
               </div>
             </div>
             <div class="m-2 m-4">
@@ -184,9 +213,17 @@
                 class="outline-blue-600 bg-slate-800 rounded-md width-full"
               />
             </div>
-            <div id="modal-btn" class=" flex justify-end gap-5">
-              <button class="btn-annuler bg-slate-800 rounded-lg p-1 ">Annuler</button>
-              <button class="btn-ajouter bg-green-600 rounded-lg p-1">Ajouter</button>
+            <div id="modal-btn" class="flex justify-end gap-5">
+              <button
+                class="btn-annuler bg-slate-800 rounded-lg p-1 cursor-pointer"
+              >
+                Annuler
+              </button>
+              <button
+                class="btn-ajouter bg-green-600 rounded-lg p-1 cursor-pointer"
+              >
+                Ajouter
+              </button>
             </div>
           </form>
         </div>
