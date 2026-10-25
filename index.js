@@ -76,6 +76,69 @@ form.addEventListener('submit', (event) => {
     container.append(info_container)
     playerList.append(container)
 
-    form.reset();
+    // form.reset();
+    // pop.classList.remove('open-modal')
+
+})
+
+
+
+
+form.addEventListener('submit', function (event) {
+    if (event.target.id == 'name') {
+        validateName;
+    } else if (event.target.id == 'num') {
+        validateNbr;
+    }
+
+})
+
+
+function validateName() {
+    const name = document.querySelector('#name')
+    const mssg_err = document.querySelector('#errName')
+    const nm = name.value.trim()
+
+    if (nm === "") {
+        mssg_err.textContent = "le champ ne peut pas etre vide";
+
+    } else {
+        mssg_err.textContent = '';
+
+    }
+}
+
+
+
+function validateNbr() {
+    const number = document.querySelector('#num')
+    const mssg_err = document.querySelector('#errNb')
+    const nbr = number.value.trim()
+
+    if (nbr === "") {
+        mssg_err.textContent = "le champ ne peut pas etre vide";
+    } else {
+        mssg_err.textContent = '';
+    }
+}
+function validatePost() {
+    const mssg_err = document.querySelector('#errpost')
+    const post_checked = document.querySelector('input[name="poste"]:checked');
+    if (!post_checked) {
+        mssg_err.textContent = "il faut selectionner un post";
+    } else {
+        mssg_err.textContent = '';
+    }
+}
+
+
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    validateName();
+    validateNbr();
+    validatePost()
+
 
 })
