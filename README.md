@@ -2,13 +2,13 @@
 
 Une application web interactive de composition d'équipe de football en 4-4-2, développée en JavaScript (DOM) et stylisée avec Tailwind CSS.
 
-## 🛠️ Technologies Utilisées
+## Technologies Utilisées
 * **HTML5** : Structure de la page et de la modale.
 * **Tailwind CSS** : Design et mise en page responsive.
 * **JavaScript (DOM)** : Logique interactive, gestion des événements, validation en temps réel.
 
 
-## 🚀 Fonctionnalités Implémentées
+## Fonctionnalités Implémentées
 
 ### 1. Gestion des Joueurs (Modal & Formulaire)
 * **Ouverture et fermeture** de la modale d'ajout/modification via des écouteurs d'événements.
