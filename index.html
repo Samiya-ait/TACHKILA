@@ -10,11 +10,11 @@
   <body w-screen h-screen>
     <header>
       <nav
-        class="flex justify-between bg-slate-800 pr-2 pl-2 pb-3 pt-3 border-b"
+        class="flex justify-between bg-slate-800 pr-2 pl-2 pb-3 pt-3 border-b text-sm"
       >
         <div class="flex gap-1">
           <img
-            class="bg-white rounded-full"
+            class="bg-white rounded-full max-sm:w-5 max-sm:h-5"
             width="20"
             height="20"
             src="https://img.icons8.com/sf-ultralight/25/football2.png"
@@ -32,32 +32,36 @@
         </div>
         <div class="flex gap-3 text-white">
           <p>Shéma</p>
-          <span class="bg-slate-900 rounded-lg pr-2 pl-2 border border-#334155"
+          <span class="bg-slate-900 rounded-lg pr-2 pl-2 border border-#334155 max-sm:text-xs max-sm:p-1"
             >4-4-2</span
           >
         </div>
       </nav>
     </header>
-    <main class="flex">
-      <aside class="text-white w-1/4 h-screen bg-slate-800 border-r">
+    <main class="flex max-sm:flex-col truncate">
+      <aside
+        class="text-white text-base w-1/4 h-screen bg-slate-800 border-r max-sm:w-full max-sm:h-auto"
+      >
         <button
           class="bg-green-600 rounded-lg m-4 p-1 w-4/5 font-bold cursor-pointer"
           id="ajouterBtn"
         >
           + Ajouter un joueur
         </button>
-        <div class="flex gap-25">
+        <div class="flex gap-10">
           <p>Effectif</p>
           <p id="placedCounter" class="m-4 text-sm"></p>
           <p class="compteur"></p>
         </div>
-        <p>
-          Cliquer sur un joueur placé pour voir sa case sur le terrain. <br> tu peux
+        <p class="text-sm">
+          Cliquer sur un joueur placé pour voir sa case sur le terrain.tu peux
           le modifier et supprimer.
         </p>
         <div class="playerList"></div>
       </aside>
-      <section class="h-screen w-3/4 bg-slate-900 flex flex-col items-center">
+      <section
+        class="h-screen w-3/4 bg-slate-900 flex flex-col items-center max-sm:w-full max-sm:h-auto"
+      >
         <div class="terrain-container">
           <div class="terrain"></div>
           <div class="terrain"></div>
@@ -205,7 +209,12 @@
                 >
 
                 <label for="">
-                  <input type="radio" id="milieu" value="milieu" name="poste" />Milieu</label
+                  <input
+                    type="radio"
+                    id="milieu"
+                    value="milieu"
+                    name="poste"
+                  />Milieu</label
                 >
 
                 <label for=""
@@ -244,7 +253,6 @@
               >
                 Ajouter
               </button>
-              
             </div>
             <p class="mssg" id="err_form"></p>
           </form>
