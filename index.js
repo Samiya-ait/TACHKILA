@@ -6,6 +6,9 @@ const annuler = document.querySelector('.btn-annuler')
 const croix = document.querySelector('.btn-croix')
 const placedCounter = document.querySelector('#placedCounter')
 const compteur = document.querySelector('.compteur')
+const modalTitle = document.querySelector('#modal h5')
+const submitBtn = document.querySelector('.btn-ajouter')
+let editingId = null
 
 
 ajoutModal.addEventListener('click', () => {
@@ -86,6 +89,24 @@ form.addEventListener('submit', (event) => {
         return;
     }
 
+    if (editingId !== null) {
+        const player = players.find(p => p.id === editingId)
+        if (player.post !== playerPost && player.zone !== null) {
+            player.zone = null
+        }
+        player.name = nom.value
+        player.post = playerPost
+        player.number = number.value
+
+        displayList();
+        displayTerrain();
+        updateCounters();
+        EditModal();
+        pop.classList.remove('open-modal');
+        return;
+    }
+
+
     const playerInfo = {
         id: Date.now(),
         name: nom.value,
@@ -97,12 +118,12 @@ form.addEventListener('submit', (event) => {
     players.push(playerInfo);
 
     displayList();
-    displayTerrain()
-    updateCounters()
-    compteur.textContent = `${players.length} joueur(s)`;
+    displayTerrain();
+    updateCounters();
+    // compteur.textContent = `${players.length} joueur(s)`;
 
     form.reset();
-    pop.classList.remove('open-modal')
+    pop.classList.remove('open-modal');
 })
 
 
@@ -125,19 +146,44 @@ function validateName() {
 function validateNbr() {
     const mssg_err = document.querySelector('#errNb')
     const nbr = number.value.trim()
-
     if (nbr === "") {
         mssg_err.textContent = "le champ ne peut pas etre vide";
         mssg_err.className("mssg text-red-600 text-xs")
     } else if (!/^(0?[1-9]|[1-9][0-9])$/.test(nbr)) {
         mssg_err.textContent = "le nombre doit etre entre 1 et 99"
         mssg_err.className("mssg text-red-600 text-xs")
-} else if (players.some(p => Number(p.number) === Number(nbr))) {
+    } else if (players.some(p => Number(p.number) === Number(nbr))) {
         mssg_err.textContent = "ce numero est deja utilise"
         mssg_err.className = "mssg text-red-600 text-xs"
     } else { mssg_err.textContent = ''; }
 }
 
+
+function EditModal() {
+    editingId = null
+    form.reset()
+    document.querySelectorAll('.mssg').forEach(m => { m.textContent = "" })
+    modalTitle.textContent = "Ajouter Un joueur"
+    submitBtn.textContent = "Ajouter"
+}
+
+function editPlayer(player) {
+    EditModal()
+    editingId = player.id
+    nom.value = player.name
+    number.value = player.number
+    const radio = document.querySelector('input[name="poste"][value="' + player.post + '"]')
+    if (radio) radio.checked = true
+    pop.classList.add('open-modal')
+}
+
+function deletePlayer(player) {
+    const index = players.indexOf(player)
+    players.splice(index, 1)
+    displayList();
+    displayTerrain();
+    updateCounters();
+}
 
 
 function placePlayer(player, value) {
@@ -152,12 +198,16 @@ function placePlayer(player, value) {
     const zone = zones[zoneId]
 
     if (zone.poste !== player.post || players.some(p => p.zone === zoneId && p.id !== player.id)) {
-        saveAndRefresh()
+        displayList();
+        displayTerrain();
+        updateCounters();
         return
     }
 
     player.zone = zoneId
-    saveAndRefresh()
+    displayList();
+    displayTerrain();
+    updateCounters();
 }
 
 
@@ -191,19 +241,18 @@ function createSelect(player) {
 
 function createCard(playerInfo) {
     const container = document.createElement("div")
-    container.classList.add("flex","w-full","min-h-10","gap-20","text-center","border","border-green-600","mt-2")
-
-    if (playerInfo.zone !== null) { container.classList.add("opacity-50") }
+    container.classList.add("flex", "w-full", "min-h-10", "gap-20", "text-center", "border", "border-green-600", "mt-2")
+    // if (playerInfo.zone !== null) { container.classList.add("opacity-50") }
 
     const info_container = document.createElement("div")
-    info_container.classList.add("flex","gap-2","align-center","justify-between")
+    info_container.classList.add("flex", "gap-2", "align-center", "justify-between")
 
     const nbr_container = document.createElement("span")
     nbr_container.textContent = (playerInfo.number)
-    nbr_container.classList.add("rounded-full","border","border-yellow-500","text-center")
+    nbr_container.classList.add("rounded-full", "border", "border-yellow-500", "text-center")
 
     const nomPost_container = document.createElement("div")
-    nomPost_container.classList.add('flex', 'flex-col',"justify-center","items-start")
+    nomPost_container.classList.add('flex', 'flex-col', "justify-center", "items-start")
 
     const nom_container = document.createElement("p")
     nom_container.classList.add('font-bold')
@@ -212,17 +261,38 @@ function createCard(playerInfo) {
     const post_container = document.createElement("p")
     post_container.textContent = (playerInfo.post)
 
+    const btn_mod = document.createElement("button")
+    const btn_dlt = document.createElement("button")
+
+
+    const img_modifier = document.createElement("img")
+    img_modifier.src = "https://img.icons8.com/material-sharp/24/pencil--v2.png"
+
+
+    const img_supprimer = document.createElement("img")
+    img_supprimer.src = "https://img.icons8.com/material-rounded/24/waste.png"
+
+    btn_mod.append(img_modifier)
+    btn_dlt.append(img_supprimer)
+
+    btn_mod.addEventListener('click', () => {
+        editPlayer(playerInfo)
+    })
+    btn_dlt.addEventListener('click', () => {
+        deletePlayer(playerInfo)
+    })
+
     const select = createSelect(playerInfo)
 
     nomPost_container.append(nom_container, post_container, select)
-    info_container.append(nbr_container, nomPost_container)
+    info_container.append(nbr_container, nomPost_container, btn_mod, btn_dlt)
     container.append(info_container)
     playerList.append(container)
 }
 
 
 
-function displayList(){
+function displayList() {
     playerList.innerHTML = ""
     players.forEach(player => { createCard(player) })
 }
@@ -269,46 +339,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (memes.length > 1) { zone.name = zone.label + " " + (memes.indexOf(zone) + 1) }
     })
 
-    displayList()
-    displayTerrain()
-    updateCounters()
+    displayList();
+    displayTerrain();
+    updateCounters();
 })
-// const btn_mod = document.createElement("button")
-// btn_mod.classList.add("cursor-pointer")
 
-// const btn_dlt = document.createElement("button")
-// btn_dlt.classList.add("cursor-pointer")
-
-// const img_modifier = document.createElement("img")
-// img_modifier.src = "https://img.icons8.com/material-sharp/24/pencil--v2.png"
-
-// const img_supprimer = document.createElement("img")
-// img_supprimer.src = "https://img.icons8.com/material-rounded/24/waste.png"
-
-// btn_mod.append(img_modifier)
-// btn_dlt.append(img_supprimer)
-
-
-
-// nomPost_container.append(nom_container, post_container)
-// info_container.append(nbr_container, nomPost_container, btn_mod, btn_dlt)
-// container.append(info_container)
-// playerList.append(container)
-
-// form.reset();
-//     // pop.classList.remove('open-modal')
-
-// btn_dlt.addEventListener('click', function () {
-//     container.remove();
-
-// })
-
-// //modal d'ajouter
-// // editingId = player.id
-// form.reset()
-
-// const messages = document.querySelectorAll('.mssg')
-// messages.forEach(m => {
-//     m.textContent = ''
-// })
-// pop.classList.add('open-modal')
