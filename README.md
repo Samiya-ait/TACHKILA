@@ -27,3 +27,6 @@ Une application web interactive de composition d'équipe de football en 4-4-2, d
 
 ##  Planification du Projet
  [TACHKILA - Planification Jira](https://gym09.atlassian.net/jira/software/projects/SCRUM/boards/1?sprintStarted=true&filter=&groupBy=none&atlOrigin=eyJpIjoiZWU1M2ZiM2IwNmM5NDM4MzhhZmQ4YTdmMDA0MWQzNDAiLCJwIjoiaiJ9)
+
+##  Présentation
+ [TACHKILA - presentation](https://canva.link/aueyreiyuo6g2b8)

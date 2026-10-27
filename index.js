@@ -38,6 +38,7 @@ const err_form = document.querySelector('#err_form')
 const players = [];
 
 const zones = [];
+const STORAGE_KEY='tachkila_players'
 
 const posteType = {
     GB: 'gardien',
@@ -97,7 +98,7 @@ form.addEventListener('submit', (event) => {
         player.name = nom.value
         player.post = playerPost
         player.number = number.value
-
+        saveToStorage();
         displayList();
         displayTerrain();
         updateCounters();
@@ -117,6 +118,7 @@ form.addEventListener('submit', (event) => {
 
     players.push(playerInfo);
 
+    saveToStorage();
     displayList();
     displayTerrain();
     updateCounters();
@@ -159,6 +161,19 @@ function validateNbr() {
 }
 
 
+
+function saveToStorage(){
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(players))
+}
+
+function LoadFromStorage(){
+    const saved=localStorage.getItem(STORAGE_KEY)
+    if(saved){
+        const list=JSON.parse(saved)
+        list.forEach(p=>players.push(p))
+    }
+}
+
 function EditModal() {
     editingId = null
     form.reset()
@@ -180,6 +195,8 @@ function editPlayer(player) {
 function deletePlayer(player) {
     const index = players.indexOf(player)
     players.splice(index, 1)
+
+    saveToStorage();
     displayList();
     displayTerrain();
     updateCounters();
@@ -189,6 +206,8 @@ function deletePlayer(player) {
 function placePlayer(player, value) {
     if (value === "") {
         player.zone = null
+
+        saveToStorage();
         displayList();
         displayTerrain();
         updateCounters();
@@ -198,6 +217,8 @@ function placePlayer(player, value) {
     const zone = zones[zoneId]
 
     if (zone.poste !== player.post || players.some(p => p.zone === zoneId && p.id !== player.id)) {
+
+        saveToStorage();
         displayList();
         displayTerrain();
         updateCounters();
@@ -205,6 +226,8 @@ function placePlayer(player, value) {
     }
 
     player.zone = zoneId
+
+    saveToStorage();
     displayList();
     displayTerrain();
     updateCounters();
@@ -339,6 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (memes.length > 1) { zone.name = zone.label + " " + (memes.indexOf(zone) + 1) }
     })
 
+
+    saveToStorage();
     displayList();
     displayTerrain();
     updateCounters();
