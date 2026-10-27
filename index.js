@@ -3,10 +3,17 @@
 const ajoutModal = document.querySelector('#ajouterBtn')
 const pop = document.querySelector('#modal')
 const annuler = document.querySelector('.btn-annuler')
-// const ajoutPlayer = document.querySelector('btn-ajouter')
+const croix = document.querySelector('.btn-croix')
+const placedCounter = document.querySelector('#placedCounter')
+const compteur = document.querySelector('.compteur')
+
 
 ajoutModal.addEventListener('click', () => {
     pop.classList.add('open-modal')
+})
+
+croix.addEventListener('click', () => {
+    pop.classList.remove('open-modal')
 })
 
 annuler.addEventListener('click', () => {
@@ -16,18 +23,31 @@ annuler.addEventListener('click', () => {
 
 //players list
 const playerList = document.querySelector('.playerList')
-
 const nom = document.querySelector('#name')
 const number = document.querySelector('#num')
-const posts = document.querySelectorAll('input[name="poste"]')
 
 
+nom.addEventListener('input', validateName)
+number.addEventListener('input', validateNbr)
 
 const form = document.querySelector('form')
+const err_form = document.querySelector('#err_form')
+const players = [];
+
+const zones = [];
+
+const posteType = {
+    GB: 'gardien',
+    DG: 'defenseur', DC: 'defenseur', DD: 'defenseur',
+    MG: 'milieu', MC: 'milieu', MD: 'milieu',
+    BU: 'Attaquant'
+}
+
 form.addEventListener('submit', (event) => {
     event.preventDefault()
 
-    const players = [];
+    const posts = document.querySelectorAll('input[name="poste"]')
+
     let playerPost;
     for (const post of posts) {
         if (post.checked) {
@@ -37,108 +57,258 @@ form.addEventListener('submit', (event) => {
     }
 
 
+    const errPost = document.querySelector('#errpost')
+    if (!playerPost) {
+        errPost.textContent = "Il faut sélectionner un poste";
+        errPost.className = "mssg text-red-600 text-xs";
+        return;
+    } else {
+        errPost.textContent = "";
+    }
+
+
+    validateName();
+    validateNbr();
+
+
+    err_form.textContent = "";
+    const messages = document.querySelectorAll('.mssg')
+    let hasError = false;
+    messages.forEach(mssg => {
+        if (mssg.textContent.trim() !== "") {
+            hasError = true;
+        }
+    });
+
+    if (hasError) {
+        err_form.textContent = "Veuillez corriger les erreurs avant d'ajouter.";
+        err_form.className = "mssg text-red-600 mt-2 text-xs";
+        return;
+    }
+
     const playerInfo = {
+        id: Date.now(),
         name: nom.value,
         post: playerPost,
-        number: number.value
+        number: number.value,
+        zone: null
     }
 
     players.push(playerInfo);
 
+    displayList();
+    displayTerrain()
+    updateCounters()
+    compteur.textContent = `${players.length} joueur(s)`;
 
-    const container = document.createElement("div")
-    container.classList.add("flex,width-full,height-auto")
-
-
-    const info_container = document.createElement("div")
-    info_container.classList.add("flex")
-
-
-    const nbr_container = document.createElement("p")
-    nbr_container.textContent = (playerInfo.number)
-    nbr_container.classList.add("rounded-lg")
-
-
-    const nomPost_container = document.createElement("div")
-    nomPost_container.classList.add('flex', 'flex-col')
-
-    const nom_container = document.createElement("p")
-    nom_container.textContent = (playerInfo.name)
-
-    const post_container = document.createElement("p")
-    post_container.textContent = (playerInfo.post)
-
-
-
-    nomPost_container.append(nom_container, post_container)
-    // nbr_container.append(nomPost_container)
-    info_container.append(nbr_container, nomPost_container)
-    container.append(info_container)
-    playerList.append(container)
-
-    // form.reset();
-    // pop.classList.remove('open-modal')
-
-})
-
-
-
-
-form.addEventListener('submit', function (event) {
-    if (event.target.id == 'name') {
-        validateName;
-    } else if (event.target.id == 'num') {
-        validateNbr;
-    }
-
+    form.reset();
+    pop.classList.remove('open-modal')
 })
 
 
 function validateName() {
-    const name = document.querySelector('#name')
     const mssg_err = document.querySelector('#errName')
-    const nm = name.value.trim()
+    const nm = nom.value.trim()
 
     if (nm === "") {
-        mssg_err.textContent = "le champ ne peut pas etre vide";
-
+        mssg_err.textContent = "le champ ne peut pas etre vide  ";
+        mssg_err.className("mssg text-red-600 text-xs")
+    } else if (!/^[A-Za-z]{3,}$/.test(nm)) {
+        mssg_err.textContent = 'il faut saisi au moins 3 lettre alphabetique';
+        mssg_err.className("mssg text-red-600 text-xs")
     } else {
         mssg_err.textContent = '';
 
     }
 }
 
-
-
 function validateNbr() {
-    const number = document.querySelector('#num')
     const mssg_err = document.querySelector('#errNb')
     const nbr = number.value.trim()
 
     if (nbr === "") {
         mssg_err.textContent = "le champ ne peut pas etre vide";
-    } else {
-        mssg_err.textContent = '';
-    }
-}
-function validatePost() {
-    const mssg_err = document.querySelector('#errpost')
-    const post_checked = document.querySelector('input[name="poste"]:checked');
-    if (!post_checked) {
-        mssg_err.textContent = "il faut selectionner un post";
-    } else {
-        mssg_err.textContent = '';
-    }
+        mssg_err.className("mssg text-red-600 text-xs")
+    } else if (!/^(0?[1-9]|[1-9][0-9])$/.test(nbr)) {
+        mssg_err.textContent = "le nombre doit etre entre 1 et 99"
+        mssg_err.className("mssg text-red-600 text-xs")
+} else if (players.some(p => Number(p.number) === Number(nbr))) {
+        mssg_err.textContent = "ce numero est deja utilise"
+        mssg_err.className = "mssg text-red-600 text-xs"
+    } else { mssg_err.textContent = ''; }
 }
 
 
 
-form.addEventListener('submit', function (e) {
-    e.preventDefault();
+function placePlayer(player, value) {
+    if (value === "") {
+        player.zone = null
+        displayList();
+        displayTerrain();
+        updateCounters();
+        return
+    }
+    const zoneId = Number(value)
+    const zone = zones[zoneId]
 
-    validateName();
-    validateNbr();
-    validatePost()
+    if (zone.poste !== player.post || players.some(p => p.zone === zoneId && p.id !== player.id)) {
+        saveAndRefresh()
+        return
+    }
+
+    player.zone = zoneId
+    saveAndRefresh()
+}
 
 
+function createSelect(player) {
+    const select = document.createElement("select")
+    select.classList.add("bg-slate-700", "text-xs", "rounded", "mt-1", "cursor-pointer")
+
+    const optBanc = document.createElement("option")
+    optBanc.value = ""
+    optBanc.textContent = "Sur le banc"
+    select.append(optBanc)
+
+    zones.forEach(zone => {
+        if (zone.poste === player.post) {
+            const opt = document.createElement("option")
+            opt.value = zone.id
+            opt.textContent = zone.name
+            if (players.some(p => p.zone === zone.id && p.id !== player.id)) {
+                opt.disabled = true
+                opt.textContent = zone.name + " (occupée)"
+            }
+            select.append(opt)
+        }
+    })
+
+    select.value = player.zone === null ? "" : String(player.zone)
+    select.addEventListener("change", () => { placePlayer(player, select.value) })
+    return select
+}
+
+
+function createCard(playerInfo) {
+    const container = document.createElement("div")
+    container.classList.add("flex","w-full","min-h-10","gap-20","text-center","border","border-green-600","mt-2")
+
+    if (playerInfo.zone !== null) { container.classList.add("opacity-50") }
+
+    const info_container = document.createElement("div")
+    info_container.classList.add("flex","gap-2","align-center","justify-between")
+
+    const nbr_container = document.createElement("span")
+    nbr_container.textContent = (playerInfo.number)
+    nbr_container.classList.add("rounded-full","border","border-yellow-500","text-center")
+
+    const nomPost_container = document.createElement("div")
+    nomPost_container.classList.add('flex', 'flex-col',"justify-center","items-start")
+
+    const nom_container = document.createElement("p")
+    nom_container.classList.add('font-bold')
+    nom_container.textContent = (playerInfo.name)
+
+    const post_container = document.createElement("p")
+    post_container.textContent = (playerInfo.post)
+
+    const select = createSelect(playerInfo)
+
+    nomPost_container.append(nom_container, post_container, select)
+    info_container.append(nbr_container, nomPost_container)
+    container.append(info_container)
+    playerList.append(container)
+}
+
+
+
+function displayList(){
+    playerList.innerHTML = ""
+    players.forEach(player => { createCard(player) })
+}
+
+function displayTerrain() {
+    zones.forEach(zone => {
+        const player = players.find(p => p.zone === zone.id)
+        zone.cell.textContent = ""
+        if (player) {
+            const num = document.createElement("p")
+            num.textContent = player.number
+            const nm = document.createElement("p")
+            nm.classList.add("text-xs", "font-normal")
+            nm.textContent = player.name
+            zone.cell.append(num, nm)
+        } else {
+            zone.cell.textContent = zone.label
+        }
+    })
+}
+function updateCounters() {
+    compteur.textContent = `${players.length} joueur(s)`
+    // const placed = players.filter(p => p.zone !== null).length
+    // placedCounter.textContent = "Joueurs placés : " + placed + " / 11"
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cells = document.querySelectorAll('.terrain')
+    cells.forEach(cell => {
+        const label = cell.textContent.trim()
+        if (label !== "") {
+            zones.push({
+                id: zones.length,
+                label: label,
+                name: label,
+                poste: posteType[label],
+                cell: cell
+            })
+        }
+    })
+
+    zones.forEach(zone => {
+        const memes = zones.filter(z => z.label === zone.label)
+        if (memes.length > 1) { zone.name = zone.label + " " + (memes.indexOf(zone) + 1) }
+    })
+
+    displayList()
+    displayTerrain()
+    updateCounters()
 })
+// const btn_mod = document.createElement("button")
+// btn_mod.classList.add("cursor-pointer")
+
+// const btn_dlt = document.createElement("button")
+// btn_dlt.classList.add("cursor-pointer")
+
+// const img_modifier = document.createElement("img")
+// img_modifier.src = "https://img.icons8.com/material-sharp/24/pencil--v2.png"
+
+// const img_supprimer = document.createElement("img")
+// img_supprimer.src = "https://img.icons8.com/material-rounded/24/waste.png"
+
+// btn_mod.append(img_modifier)
+// btn_dlt.append(img_supprimer)
+
+
+
+// nomPost_container.append(nom_container, post_container)
+// info_container.append(nbr_container, nomPost_container, btn_mod, btn_dlt)
+// container.append(info_container)
+// playerList.append(container)
+
+// form.reset();
+//     // pop.classList.remove('open-modal')
+
+// btn_dlt.addEventListener('click', function () {
+//     container.remove();
+
+// })
+
+// //modal d'ajouter
+// // editingId = player.id
+// form.reset()
+
+// const messages = document.querySelectorAll('.mssg')
+// messages.forEach(m => {
+//     m.textContent = ''
+// })
+// pop.classList.add('open-modal')

@@ -48,10 +48,11 @@
         </button>
         <div class="flex gap-25">
           <p>Effectif</p>
-          <p>1joueur(s)</p>
+          <p id="placedCounter" class="m-4 text-sm"></p>
+          <p class="compteur"></p>
         </div>
         <p>
-          Cliquer sur un joueur placé pour voir sa case sur le terrain.tu peux
+          Cliquer sur un joueur placé pour voir sa case sur le terrain. <br> tu peux
           le modifier et supprimer.
         </p>
         <div class="playerList"></div>
@@ -170,7 +171,7 @@
           <form action="" class="form_pop">
             <div class="flex justify-between">
               <h5 class="m-2 font-bold">Ajouter Un joueur</h5>
-              <button class="btn-annuler" type="button">&times;</button>
+              <button class="btn-croix" type="button">&times;</button>
             </div>
             <div>
               <label for="name" class="m-2 text-xs"> Nom Complet</label>
@@ -222,9 +223,11 @@
               <label for="num" class="text-xs">Numéro(1 à 99)</label>
               <input
                 id="num"
-                type="text"
                 placeholder="Number"
                 class="number outline-blue-600 bg-slate-800 rounded-md width-full"
+                type="number"
+                max="99"
+                min="1"
               />
               <p class="mssg" id="errNb"></p>
             </div>
@@ -241,7 +244,9 @@
               >
                 Ajouter
               </button>
+              
             </div>
+            <p class="mssg" id="err_form"></p>
           </form>
         </div>
       </section>
