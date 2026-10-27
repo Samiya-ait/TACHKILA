@@ -242,7 +242,7 @@ function createSelect(player) {
 function createCard(playerInfo) {
     const container = document.createElement("div")
     container.classList.add("flex", "w-full", "min-h-10", "gap-20", "text-center", "border", "border-green-600", "mt-2")
-    // if (playerInfo.zone !== null) { container.classList.add("opacity-50") }
+    if (playerInfo.zone !== null) { container.classList.add("opacity-50") }
 
     const info_container = document.createElement("div")
     info_container.classList.add("flex", "gap-2", "align-center", "justify-between")
