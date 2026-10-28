@@ -135,10 +135,10 @@ function validateName() {
 
     if (nm === "") {
         mssg_err.textContent = "le champ ne peut pas etre vide  ";
-        mssg_err.className("mssg text-red-600 text-xs")
+        mssg_err.className="mssg text-red-600 text-xs"
     } else if (!/^[A-Za-z]{3,}$/.test(nm)) {
         mssg_err.textContent = 'il faut saisi au moins 3 lettre alphabetique';
-        mssg_err.className("mssg text-red-600 text-xs")
+        mssg_err.className="mssg text-red-600 text-xs"
     } else {
         mssg_err.textContent = '';
 
@@ -150,10 +150,10 @@ function validateNbr() {
     const nbr = number.value.trim()
     if (nbr === "") {
         mssg_err.textContent = "le champ ne peut pas etre vide";
-        mssg_err.className("mssg text-red-600 text-xs")
+        mssg_err.className="mssg text-red-600 text-xs"
     } else if (!/^(0?[1-9]|[1-9][0-9])$/.test(nbr)) {
         mssg_err.textContent = "le nombre doit etre entre 1 et 99"
-        mssg_err.className("mssg text-red-600 text-xs")
+        mssg_err.className="mssg text-red-600 text-xs"
     } else if (players.some(p => Number(p.number) === Number(nbr))) {
         mssg_err.textContent = "ce numero est deja utilise"
         mssg_err.className = "mssg text-red-600 text-xs"
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (memes.length > 1) { zone.name = zone.label + " " + (memes.indexOf(zone) + 1) }
     })
 
-
+    LoadFromStorage()
     saveToStorage();
     displayList();
     displayTerrain();
